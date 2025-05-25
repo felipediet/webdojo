@@ -1,4 +1,4 @@
-/// <reference types="Cypress" />
+/// <reference types="cypress" />
 
 // Comandos customizados para facilitar a automação de testes:
 
