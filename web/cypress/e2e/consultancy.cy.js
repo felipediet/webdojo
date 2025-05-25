@@ -2,7 +2,7 @@
 
 describe('Formuçãrio de Login', () => {
    
-  it.only('Deve veririficar os campos obrigatórios', () => {
+  it('Deve veririficar os campos obrigatórios', () => {
       cy.visitarPortal()
       cy.fazerLogin('papito@webdojo.com','katana123')
       cy.irPara('Formulários', 'Consultoria')
@@ -55,7 +55,7 @@ describe('Formuçãrio de Login', () => {
         .and('have.css','color', 'rgb(248, 113, 113)')
   })
 
-  it('Deve solicitar consultoria individual', () => {
+  it.only('Deve solicitar consultoria individual', () => {
       cy.visitarPortal()
       cy.fazerLogin('papito@webdojo.com','katana123')
       cy.irPara('Formulários', 'Consultoria')
@@ -112,7 +112,7 @@ describe('Formuçãrio de Login', () => {
       
       cy.get('textarea[placeholder="Descreva mais detalhes sobre sua necessidade"]')
       //cy.get('#details')
-        .type('Preciso de uma consultoria para entender melhor o funcionamento do Cypress e como posso utilizá-lo em meus projetos. Estou tendo dificuldades com a configuração inicial e gostaria de ajuda para resolver isso.')
+        .type('Preciso de uma consultoria para entender melhor o funcionamento do Cypress.')
 
       const techs = ['Cypress', 'Playwright', 'Node']
 
@@ -169,8 +169,11 @@ describe('Formuçãrio de Login', () => {
         .should('be.visible')
         .click()
 
-      cy.contains('Sua solicitação de consultoria foi enviada com sucesso! Em breve, nossa equipe entrará em contato através do email fornecido.')
-        .should('be.visible')      
+      cy.get('.modal')
+        .should('be.visible')
+        .find('.modal-content')
+        .should('be.visible')
+        .and('have.text', 'Sua solicitação de consultoria foi enviada com sucesso! Em breve, nossa equipe entrará em contato através do email fornecido.')
   })
 
 
