@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 
-describe('Video', () => {
+describe('iFrame', () => {
    
-  it('Deve poder tocar o video de exemplo', () => {
+  it('Deve poder tocar o video de exemplo no Iframe', () => {
         cy.visitarPortal()
         cy.fazerLogin('papito@webdojo.com','katana123')
         cy.contains('Video').click()
