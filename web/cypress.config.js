@@ -5,6 +5,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
-    defaultCommandTimeout: 10000 // 10 seconds
+    //defaultCommandTimeout: 10000 // 10 seconds
+    experimentalStudio: true // Enable experimental Studio feature
   },
 });

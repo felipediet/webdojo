@@ -1,6 +1,6 @@
-/// <reference types="Cypress" />
+/// <reference types="cypress" />
 
-describe('Formuçãrio de Login', () => {
+describe('Formulário de Login', () => {
    
   it('Deve veririficar os campos obrigatórios', () => {
       cy.visitarPortal()
@@ -169,7 +169,7 @@ describe('Formuçãrio de Login', () => {
         .should('be.visible')
         .click()
 
-      cy.get('.modal')
+      cy.get('.modal', { timeout: 7000 })
         .should('be.visible')
         .find('.modal-content')
         .should('be.visible')
