@@ -2,6 +2,8 @@
 
 // Comandos customizados para facilitar a automação de testes:
 
+import 'cypress-real-events';
+
 // - visitarPortal: acessa o portal na resolução padrão de 1440x900.
 Cypress.Commands.add('visitarPortal', () => {
 cy.viewport(1440, 900)
