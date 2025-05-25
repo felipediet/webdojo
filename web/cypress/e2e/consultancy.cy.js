@@ -2,7 +2,7 @@
 
 describe('Formuçãrio de Login', () => {
    
-  it('Deve veririficar os campos obrigatórios', () => {
+  it.only('Deve veririficar os campos obrigatórios', () => {
       cy.visitarPortal()
       cy.fazerLogin('papito@webdojo.com','katana123')
       cy.irPara('Formulários', 'Consultoria')
@@ -11,19 +11,46 @@ describe('Formuçãrio de Login', () => {
         .should('be.visible')
         .click()
 
-      cy.contains('p', 'Digite nome e sobrenome')
+      //Valida campo Nome Completo buscando por Label
+      cy.contains('label', 'Nome Completo')
+        .parent()
+        .find('p')
+        .should('be.visible')
+        .and('have.text', 'Campo obrigatório')
+        .and('have.class', 'text-red-400')
+        .and('have.css','color', 'rgb(248, 113, 113)')
+      
+      //Valida campo Nome Completo buscando pelo ID
+      cy.get('#name')
+        .parent()  
+        .contains('p', 'Campo obrigatório')
         .should('be.visible')
         .and('have.class', 'text-red-400')
         .and('have.css','color', 'rgb(248, 113, 113)')
       
-      
-      cy.contains('p', 'Informe um email válido')
+      //Valida campo Email buscando por Label
+      cy.contains('label', 'Email')
+        .parent()
+        .find('p')
+        .should('be.visible')
+        .and('have.text', 'Campo obrigatório')
+        .and('have.class', 'text-red-400')
+        .and('have.css','color', 'rgb(248, 113, 113)')
+
+      //Valida campo Email buscando pelo ID
+      cy.get('#email')
+        .parent()
+        .contains('p', 'Campo obrigatório')
         .should('be.visible')
         .and('have.class', 'text-red-400')
         .and('have.css','color', 'rgb(248, 113, 113)')
 
-      cy.contains('p', 'Você precisa aceitar os termos de uso')
+      //Valida campo Termos de Uso buscando por Label
+      cy.contains('label', 'termos de uso')
+        .parent()
+        .find('p')
         .should('be.visible')
+        .and('have.text', 'Você precisa aceitar os termos de uso')
         .and('have.class', 'text-red-400')
         .and('have.css','color', 'rgb(248, 113, 113)')
   })
