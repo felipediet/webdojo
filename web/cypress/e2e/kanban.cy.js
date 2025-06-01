@@ -1,7 +1,10 @@
 describe('Kanban Board', () => {
+    
+    beforeEach(() => {
+        cy.login()
+    })
+    
     it('Deve mover uma tarefa de Todo para Done e atualizaro board', () => {
-        cy.visitarPortal()
-        cy.fazerLogin('papito@webdojo.com','katana123')
         
         cy.contains('Kanban').click()
 

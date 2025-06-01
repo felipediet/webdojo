@@ -1,10 +1,10 @@
-beforeEach(() => {
-      cy.visitarPortal()
-      cy.fazerLogin('papito@webdojo.com','katana123')
-})
-
+/// <reference types="cypress" />
 describe('Links abrindo nova guia/janela', () => {
 
+    beforeEach(() => {
+        cy.login()
+    })
+    
     it('Validando o atributo do link no Instagram', () => {
         cy.get('[data-cy="instagram-link"]')
             .should('have.attr', 'href', 'https://www.instagram.com/qapapito')

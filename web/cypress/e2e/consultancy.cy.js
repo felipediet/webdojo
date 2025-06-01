@@ -1,16 +1,14 @@
 /// <reference types="cypress" />
 
-beforeEach(() => {
-      cy.visitarPortal()
-      cy.fazerLogin('papito@webdojo.com','katana123')
-      cy.irPara('Formulários', 'Consultoria')
-})
-
-
 describe('Formulário de Login', () => {
-   
-  it('Deve veririficar os campos obrigatórios', () => {
 
+  beforeEach(() => {
+      cy.login()
+      cy.irPara('Formulários', 'Consultoria')
+  })
+
+  it('Deve veririficar os campos obrigatórios', () => {
+      cy.irPara('Formulários', 'Consultoria')
       cy.contains('button', 'Enviar formulário')
         .should('be.visible')
         .click()
@@ -60,7 +58,6 @@ describe('Formulário de Login', () => {
   })
 
   it('Deve solicitar consultoria individual', () => {
-
       // cy.get('#name')
       //   .should('be.visible')
       //   .type('Felipe Diet')

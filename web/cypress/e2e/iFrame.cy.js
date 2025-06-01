@@ -2,9 +2,11 @@
 
 describe('iFrame', () => {
    
+    beforeEach(() => {
+        cy.login()
+    })
+
   it('Deve poder tocar o video de exemplo no Iframe', () => {
-        cy.visitarPortal()
-        cy.fazerLogin('papito@webdojo.com','katana123')
         cy.contains('Video').click()
 
         cy.get('iframe[title="Video Player"]')
