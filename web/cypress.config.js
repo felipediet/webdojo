@@ -7,5 +7,6 @@ module.exports = defineConfig({
     },
     //defaultCommandTimeout: 10000 // 10 seconds
     experimentalStudio: true // Enable experimental Studio feature
+    ,video: true
   },
 });
