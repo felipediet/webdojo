@@ -5,6 +5,7 @@ describe('Formulário de Login', () => {
   beforeEach(() => {
       cy.login()
       cy.irPara('Formulários', 'Consultoria')
+      cy.fixture('consultancy').as('consultancyData')
   })
 
   it('Deve veririficar os campos obrigatórios', () => {
@@ -56,23 +57,9 @@ describe('Formulário de Login', () => {
         .and('have.css','color', 'rgb(248, 113, 113)')
   })
 
-  it('Deve solicitar consultoria individual', () => {  
+  it('Deve solicitar consultoria individual', function() {  
     //Massa de teste
-      const consultancyForm = {
-        name: 'Felipe Diet',
-        email: 'fefola@gmail.com',
-        phone: '11999999999',
-        formatedphone: '(11) 99999-9999',
-        consultancyType: 'Individual',
-        personType: 'cpf',
-        cpf: '34743406897',
-        formatedCpf: '347.434.068-97',
-        discoveryChannels: ['Instagram', 'YouTube', 'LinkedIn', 'Indicação de Amigo', 'Udemy'],
-        file: './cypress/support/PDF_Upload.pdf',
-        details: 'Preciso de uma consultoria para entender melhor o funcionamento do Cypress.',
-        techs: ['Cypress', 'Playwright', 'Node'],
-        terms: true,
-      }
+      const consultancyForm = this.consultancyData.personal
            
       cy.get('input[placeholder="Digite seu nome completo"]').type(consultancyForm.name)
 
@@ -202,23 +189,9 @@ describe('Formulário de Login', () => {
         
   })
 
-    it('Deve solicitar consultoria In Company', () => {  
+  it('Deve solicitar consultoria In Company', function() {  
     //Massa de teste
-      const consultancyForm = {
-        name: 'Felipe Diet',
-        email: 'fefola@gmail.com',
-        phone: '11999999999',
-        formatedphone: '(11) 99999-9999',
-        consultancyType: 'In Company',
-        personType: 'cnpj',
-        cnpj: '84012785000102',
-        formatedCNPJ: '84.012.785/0001-02',
-        discoveryChannels: ['Instagram', 'YouTube', 'LinkedIn', 'Indicação de Amigo', 'Udemy'],
-        file: './cypress/support/PDF_Upload.pdf',
-        details: 'Preciso de uma consultoria para entender melhor o funcionamento do Cypress.',
-        techs: ['Cypress', 'Playwright', 'Node'],
-        terms: true,
-      }
+    const consultancyForm = this.consultancyData.company
            
       cy.get('input[placeholder="Digite seu nome completo"]').type(consultancyForm.name)
 
