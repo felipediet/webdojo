@@ -26,7 +26,7 @@ describe('Login', () => {
       .and('have.text', 'Olá QA, esse é o seu Dojo para aprender Automação de Testes.')
   })
 
-  it.skip('Não deve logar com senha incorreta', () => {
+  it('Não deve logar com senha incorreta', () => {
     cy.visitarPortal()
     cy.fazerLogin('papito@webdojo.com', 'katana321')    
     cy.contains('Acesso negado! Tente novamente.')
