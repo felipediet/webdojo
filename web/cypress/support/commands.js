@@ -10,7 +10,6 @@ cy.viewport(1440, 900)
 cy.visit('http://localhost:3000')
 })
 
-
 // - fazerLogin: realiza login preenchendo email e senha e clicando no botão 'Entrar'.
 Cypress.Commands.add('fazerLogin', (email, password) => {
     cy.get('#email').type(email)
@@ -30,5 +29,11 @@ Cypress.Commands.add('irPara', (buttonName, pageTitle) => {
  
     cy.contains('h1', pageTitle)
         .should('be.visible')
+})
+
+// Helpers
+Cypress.Commands.add('login', () => {
+    cy.visitarPortal()
+    cy.fazerLogin('papito@webdojo.com','katana123')
 })
 
