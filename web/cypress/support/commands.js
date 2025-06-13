@@ -1,8 +1,11 @@
 /// <reference types="cypress" />
 
-// Comandos customizados para facilitar a automação de testes:
-
+// Importa comandos customizados para facilitar a automação de testes
 import 'cypress-real-events';
+import './actions/consultancy.actions';
+
+
+// Comandos customizados para facilitar a automação de testes:
 
 // - visitarPortal: acessa o portal na resolução padrão de 1440x900.
 Cypress.Commands.add('visitarPortal', () => {
@@ -36,4 +39,6 @@ Cypress.Commands.add('login', () => {
     cy.visitarPortal()
     cy.fazerLogin('papito@webdojo.com','katana123')
 })
+
+
 
