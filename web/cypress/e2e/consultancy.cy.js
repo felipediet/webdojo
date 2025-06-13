@@ -10,52 +10,26 @@ describe('Formulário de Login', () => {
   })
 
   it('Deve veririficar os campos obrigatórios', () => {
-    cy.contains('button', 'Enviar formulário')
-      .should('be.visible')
-      .click()
+    cy.submmitConsultancyForm()
+    //Clica no botão Enviar formulário
 
-    //Valida campo Nome Completo buscando por Label
-    cy.contains('label', 'Nome Completo')
-      .parent()
-      .find('p')
-      .should('be.visible')
-      .and('have.text', 'Campo obrigatório')
-      .and('have.class', 'text-red-400')
-      .and('have.css', 'color', 'rgb(248, 113, 113)')
+    const requiredFields = [
+      {label: 'Nome Completo', message: 'Campo obrigatório'},
+      {label: 'Email', message: 'Campo obrigatório'},
+      {label: 'termos de uso', message: 'Você precisa aceitar os termos de uso'}
+    ]
 
-    //Valida campo Nome Completo buscando pelo ID
-    cy.get('#name')
-      .parent()
-      .contains('p', 'Campo obrigatório')
-      .should('be.visible')
-      .and('have.class', 'text-red-400')
-      .and('have.css', 'color', 'rgb(248, 113, 113)')
+    requiredFields.forEach(({label,message}) => {
+      //Valida campo Nome Completo buscando por Label
+      cy.contains('label', label)
+        .parent()
+        .find('p')
+        .should('be.visible')
+        .and('have.text', message)
+        .and('have.class', 'text-red-400')
+        .and('have.css', 'color', 'rgb(248, 113, 113)')
+    })
 
-    //Valida campo Email buscando por Label
-    cy.contains('label', 'Email')
-      .parent()
-      .find('p')
-      .should('be.visible')
-      .and('have.text', 'Campo obrigatório')
-      .and('have.class', 'text-red-400')
-      .and('have.css', 'color', 'rgb(248, 113, 113)')
-
-    //Valida campo Email buscando pelo ID
-    cy.get('#email')
-      .parent()
-      .contains('p', 'Campo obrigatório')
-      .should('be.visible')
-      .and('have.class', 'text-red-400')
-      .and('have.css', 'color', 'rgb(248, 113, 113)')
-
-    //Valida campo Termos de Uso buscando por Label
-    cy.contains('label', 'termos de uso')
-      .parent()
-      .find('p')
-      .should('be.visible')
-      .and('have.text', 'Você precisa aceitar os termos de uso')
-      .and('have.class', 'text-red-400')
-      .and('have.css', 'color', 'rgb(248, 113, 113)')
   })
 
   it('Deve solicitar consultoria individual', () => {
