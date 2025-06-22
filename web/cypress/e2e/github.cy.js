@@ -8,16 +8,16 @@ describe('Gerenciamento de Perfis', () => {
     
     it('Deve poder cadastrar um novo perfil do github', () => {
         cy.get('#name').type('Felipe Diet');
-        cy.get('#username').type('felipediet');
+        cy.get('#username').type('felipediet1');
         cy.get('#profile').type('QA');
         cy.contains('button', 'Adicionar Perfil').click();
 
-        cy.get('#name').type('Felipe Oliveira');
-        cy.get('#username').type('felipeoliveira');
+        cy.get('#name').type('Felipe Diet');
+        cy.get('#username').type('felipediet2');
         cy.get('#profile').type('QA');
         cy.contains('button', 'Adicionar Perfil').click();
 
-        cy.contains('table tbody tr', 'felipediet')
+        cy.contains('table tbody tr', 'felipediet2')
             .should('be.visible')
             .as('trProfile');
 
@@ -26,7 +26,7 @@ describe('Gerenciamento de Perfis', () => {
             .should('be.visible');
         
         cy.get('@trProfile')
-            .contains('td','felipediet')
+            .contains('td','felipediet2')
             .should('be.visible');
 
         cy.get('@trProfile')
@@ -60,5 +60,30 @@ describe('Gerenciamento de Perfis', () => {
         cy.contains('table tbody tr', profile.username)
             .should('not.exist');
     });
+
+    it.only('Deve validar o link do github', () => {
+        
+        const profile = {
+            name: 'Felipe Diet',
+            username: 'felipediet',
+            profile: 'QA'
+        };
+
+        cy.get('#name').type(profile.name);
+        cy.get('#username').type(profile.username);
+        cy.get('#profile').type(profile.profile);
+        cy.contains('button', 'Adicionar Perfil').click();
+
+        cy.contains('table tbody tr', profile.username)
+            .should('be.visible')
+            .as('trProfile');
+
+        cy.get('@trProfile')
+            .find('a')
+            .should('have.attr', 'href', 'https://github.com/' + profile.username)
+            .and('have.attr', 'target', '_blank');
+        
+    });
+
 
 });
