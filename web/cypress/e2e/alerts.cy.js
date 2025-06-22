@@ -5,7 +5,7 @@ describe('Validação de Alertas em JavaScript', () => {
         cy.goTo('Alertas JS', 'JavaScript Alerts');
     });
 
-    it.skip('Deve validar a mensagem de alerta', () => {
+    it('Deve validar a mensagem de alerta', () => {
 
         cy.contains('button', 'Mostrar Alert').click();
 
@@ -55,7 +55,7 @@ describe('Validação de Alertas em JavaScript', () => {
         cy.contains('button', 'Mostrar Prompt').click();
     });
 
-    it.only('Deve interagir com um prompt, cancelar e validar a mensagem', () => {
+    it('Deve interagir com um prompt, cancelar e validar a mensagem', () => {
         
         cy.window().then((win) => {
             cy.stub(win, 'prompt').returns(null); // Simula o cancelamento do prompt
