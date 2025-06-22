@@ -34,4 +34,31 @@ describe('Gerenciamento de Perfis', () => {
             .should('be.visible');
     });
 
+    it('Deve poder remover perfil do github', () => {
+        
+        const profile = {
+            name: 'Felipe Diet Removido',
+            username: 'felipeDietRemovido',
+            profile: 'QA'
+        };
+
+        cy.get('#name').type(profile.name);
+        cy.get('#username').type(profile.username);
+        cy.get('#profile').type(profile.profile);
+        cy.contains('button', 'Adicionar Perfil').click();
+
+
+        cy.contains('table tbody tr', profile.username)
+            .should('be.visible')
+            .as('trProfile');
+
+        cy.get('@trProfile')
+            .find('button', 'Remover perfil')
+            .should('be.visible')
+            .click();
+
+        cy.contains('table tbody tr', profile.username)
+            .should('not.exist');
+    });
+
 });

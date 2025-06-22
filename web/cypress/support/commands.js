@@ -40,5 +40,34 @@ Cypress.Commands.add('login', () => {
     cy.fazerLogin('papito@webdojo.com','katana123')
 })
 
+Cypress.Commands.add('addGitHubProfile', ()=> {
+    const profile = {
+            name: 'Felipe Diet',
+            username: 'felipediet',
+            profile: 'QA'
+        };
+
+    cy.get('#name').type(profile.name);
+    cy.get('#username').type(profile.username);
+    cy.get('#profile').type(profile.profile);
+    cy.contains('button', 'Adicionar Perfil').click();
+
+        cy.contains('table tbody tr', profile.username)
+            .should('be.visible')
+            .as('trProfile');
+
+        cy.get('@trProfile')
+            .contains('td',profile.name)
+            .should('be.visible');
+        
+        cy.get('@trProfile')
+            .contains('td',profile.username)
+            .should('be.visible');
+
+        cy.get('@trProfile')
+            .contains('td',profile.profile)
+            .should('be.visible');
+})
+
 
 
