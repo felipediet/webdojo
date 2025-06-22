@@ -25,7 +25,7 @@ Cypress.Commands.add('fazerLogin', (email, password) => {
 })
 
 // - irPara: navega para uma página clicando em um botão específico
-Cypress.Commands.add('irPara', (buttonName, pageTitle) => {
+Cypress.Commands.add('goTo', (buttonName, pageTitle) => {
     cy.contains('button', buttonName)
     .should('be.visible')
     .click()

@@ -6,7 +6,7 @@ describe('Formulário de Login', () => {
 
   beforeEach(() => {
     cy.login()
-    cy.irPara('Formulários', 'Consultoria')
+    cy.goTo('Formulários', 'Consultoria')
   })
 
   it('Deve veririficar os campos obrigatórios', () => {
