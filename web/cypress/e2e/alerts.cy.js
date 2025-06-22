@@ -42,5 +42,31 @@ describe('Validação de Alertas em JavaScript', () => {
         });
     });
 
+    it('Deve interagir com um prompt, inserir um texto e validar uma mensagem', () => {
+        
+        cy.window().then((win) => {
+            cy.stub(win, 'prompt').returns('Felipe Diet');
+        });
+
+        cy.on('window:alert', (msg) => {
+            expect(msg).to.equal('Olá Felipe Diet! Boas vindas ao WebDojo!');
+        });
+
+        cy.contains('button', 'Mostrar Prompt').click();
+    });
+
+    it.only('Deve interagir com um prompt, cancelar e validar a mensagem', () => {
+        
+        cy.window().then((win) => {
+            cy.stub(win, 'prompt').returns(null); // Simula o cancelamento do prompt
+        });
+
+        cy.on('window:alert', (msg) => {
+            expect(msg).to.equal('Ação Cancelada.');
+        });
+
+        cy.contains('button', 'Mostrar Prompt').click();
+    });
+
 
 });
