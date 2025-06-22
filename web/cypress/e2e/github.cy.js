@@ -37,8 +37,8 @@ describe('Gerenciamento de Perfis', () => {
     it('Deve poder remover perfil do github', () => {
         
         const profile = {
-            name: 'Felipe Diet Removido',
-            username: 'felipeDietRemovido',
+            name: 'Felipe Diet',
+            username: 'felipediet',
             profile: 'QA'
         };
 
@@ -61,7 +61,7 @@ describe('Gerenciamento de Perfis', () => {
             .should('not.exist');
     });
 
-    it.only('Deve validar o link do github', () => {
+    it('Deve validar o link do github', () => {
         
         const profile = {
             name: 'Felipe Diet',
