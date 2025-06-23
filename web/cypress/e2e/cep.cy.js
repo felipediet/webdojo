@@ -1,3 +1,5 @@
+import addresses from '../fixtures/cep.json';
+
 describe('CEP', () => {
 
     beforeEach(() => {
@@ -5,29 +7,25 @@ describe('CEP', () => {
         cy.goTo('Integração', 'Consulta de CEP');
     });
 
-    it('Deve validar a consulta de CEP', () => {
-        const profile = {
-            cep: '13203-630',
-            logradouro: 'Avenida Samuel Martins',
-            bairro: 'Jardim do Lago',
-            cidade: 'Jundiaí',
-            uf: 'SP'
-        };
-        cy.get('#cep').type(profile.cep);
-        
-        cy.contains('button', 'Buscar').click();
+    addresses.forEach((address, index) => {
+        it(`Deve validar a consulta de CEP - Conjunto ${index + 1}`, () => {
 
-        cy.get('#street')
-            .should('have.value', profile.logradouro);
-        
-        cy.get('#neighborhood')
-            .should('have.value', profile.bairro);
-        
-        cy.get('#city')
-            .should('have.value', profile.cidade);
+            cy.get('#cep').type(address.cep);
 
-        cy.get('#state')
-            .should('have.value', profile.uf);
+            cy.contains('button', 'Buscar').click();
+
+            cy.get('#street')
+                .should('have.value', address.street);
+            
+            cy.get('#neighborhood')
+                .should('have.value', address.neighborhood);
+            
+            cy.get('#city')
+                .should('have.value', address.city);
+
+            cy.get('#state')
+                .should('have.value', address.state);
+        });
     });
 
 

@@ -3,7 +3,6 @@ describe('Gerenciamento de Perfis', () => {
     beforeEach(() => {
         cy.login();
         cy.goTo('Tabela', 'Perfis do GitHub');
-
     });
     
     it('Deve poder cadastrar um novo perfil do github', () => {
