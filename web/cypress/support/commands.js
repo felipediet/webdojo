@@ -3,6 +3,7 @@
 // Importa comandos customizados para facilitar a automação de testes
 import 'cypress-real-events';
 import './actions/consultancy.actions';
+import { getTodayDate } from '../support/utils';
 
 
 // Comandos customizados para facilitar a automação de testes:
@@ -33,15 +34,6 @@ Cypress.Commands.add('goTo', (buttonName, pageTitle) => {
     cy.contains('h1', pageTitle)
         .should('be.visible')
 })
-
-  function getTodayDate() {
-  const today = new Date();
-  const day = String(today.getDate()).padStart(2, '0');
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const year = today.getFullYear();
-  return `${day}/${month}/${year}`;
-  }
-
 
 // Helpers
 Cypress.Commands.add('login', (ui = false) => {
