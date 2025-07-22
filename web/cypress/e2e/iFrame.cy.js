@@ -16,7 +16,7 @@ describe('iFrame', () => {
             .as('iFramePlayer') //Dá um alias para o iframe
 
         cy.get('@iFramePlayer')
-            .find('.play-button') //Localiza o botão de play
+            .find('.play-button') //Localiza o botão de play pela classe
             .click() //Clica no botão de play
 
         cy.get('@iFramePlayer')
