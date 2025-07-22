@@ -10,8 +10,7 @@ import { getTodayDate } from '../support/utils';
 
 // - visitarPortal: acessa o portal na resolução padrão de 1440x900.
 Cypress.Commands.add('visitarPortal', () => {
-cy.viewport(1440, 900)
-cy.visit('http://localhost:3000')
+cy.visit('/')
 })
 
 // - fazerLogin: realiza login preenchendo email e senha e clicando no botão 'Entrar'.
@@ -47,7 +46,7 @@ Cypress.Commands.add('login', (ui = false) => {
 
         cy.setCookie('login_date', loginDate);
 
-        cy.visit('http://localhost:3000/dashboard', {
+        cy.visit('/dashboard', {
             onBeforeLoad: (win) => {
                 win.localStorage.setItem('token', token)
             }
