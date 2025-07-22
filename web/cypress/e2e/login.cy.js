@@ -1,6 +1,14 @@
 /// <reference types="cypress" />
 
 describe('Login', () => {
+
+  function getTodayDate() {
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const year = today.getFullYear();
+  return `${day}/${month}/${year}`;
+  }
   
   it('Deve carregar os campos de login', () => {
     cy.visitarPortal()
@@ -9,7 +17,7 @@ describe('Login', () => {
     cy.get('button[type="submit"]').should('exist')
   })
 
-  it('Deve logar com sucesso', () => {
+  it.only('Deve logar com sucesso', () => {
     cy.visitarPortal()
     cy.fazerLogin('papito@webdojo.com', 'katana123')
     
@@ -24,6 +32,21 @@ describe('Login', () => {
     cy.get('[data-cy="welcome-message"]')
       .should('be.visible')
       .and('have.text', 'Olá QA, esse é o seu Dojo para aprender Automação de Testes.')
+
+    cy.getCookie('login_date')
+      .should('exist')
+      .should((cookie)=> {
+      expect(cookie.value).to.eq(getTodayDate())
+    })
+
+    cy.window().then((win) => {
+      const md5Regex = /^[a-fA-F0-9]{32}$/;
+      const token = win.localStorage.getItem('token')
+      expect(token).to.exist
+      expect(token).to.match(md5Regex)
+    })
+
+
   })
 
   it('Não deve logar com senha incorreta', () => {
