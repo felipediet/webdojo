@@ -17,7 +17,7 @@ describe('Login', () => {
     cy.get('button[type="submit"]').should('exist')
   })
 
-  it.only('Deve logar com sucesso', () => {
+  it('Deve logar com sucesso', () => {
     cy.visitarPortal()
     cy.fazerLogin('papito@webdojo.com', 'katana123')
     

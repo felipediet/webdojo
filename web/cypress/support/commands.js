@@ -34,10 +34,33 @@ Cypress.Commands.add('goTo', (buttonName, pageTitle) => {
         .should('be.visible')
 })
 
+  function getTodayDate() {
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const year = today.getFullYear();
+  return `${day}/${month}/${year}`;
+  }
+
+
 // Helpers
-Cypress.Commands.add('login', () => {
-    cy.visitarPortal()
-    cy.fazerLogin('papito@webdojo.com','katana123')
+Cypress.Commands.add('login', (ui = false) => {
+    if (ui) {
+        cy.visitarPortal()
+        cy.fazerLogin('papito@webdojo.com','katana123')
+    }
+    else {
+        const token = 'e1033d63a53fe66c0fd3451c7fd8f617';
+        const loginDate = getTodayDate();
+
+        cy.setCookie('login_date', loginDate);
+
+        cy.visit('http://localhost:3000/dashboard', {
+            onBeforeLoad: (win) => {
+                win.localStorage.setItem('token', token)
+            }
+        });
+    }
 })
 
 Cypress.Commands.add('addGitHubProfile', ()=> {
