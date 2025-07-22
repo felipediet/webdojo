@@ -1,7 +1,14 @@
 ### Ninja do Cypress - Comandos E2E
 
-### cd /c/NinjaDoCypress/webdojo/web
+```sh
+cd /c/NinjaDoCypress/webdojo/web
+```
 
-### npm run dev
+```sh
+npm run dev
+```
 
-### npx cypress open
+```sh
+npx cypress open
+```
+
