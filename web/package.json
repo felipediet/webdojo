@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "serve -s dist -p 3000"
+    "dev": "serve -s dist -p 3000",
+    "test": "npx cypress run",
+    "test:login": "npx cypress run --spec cypress/e2e/login.cy.js",
+    "test:alerts": "npx cypress run --spec cypress/e2e/alerts.cy.js",
+    "test:cep": "npx cypress run --spec cypress/e2e/cep.cy.js"
   },
   "dependencies": {
     "cypress-real-events": "^1.14.0",
