@@ -5,9 +5,8 @@
   "scripts": {
     "dev": "serve -s dist -p 3000",
     "test": "npx cypress run",
-    "test:login": "npx cypress run --spec cypress/e2e/login.cy.js",
-    "test:alerts": "npx cypress run --spec cypress/e2e/alerts.cy.js",
-    "test:cep": "npx cypress run --spec cypress/e2e/cep.cy.js"
+    "test:login:mobile": "npx cypress run --spec cypress/e2e/login.cy.js --config viewportWidth=360,viewportHeight=760",
+    "test:login": "npx cypress run --spec cypress/e2e/login.cy.js --config viewportWidth=1440,viewportHeight=900"
   },
   "dependencies": {
     "cypress-real-events": "^1.14.0",
