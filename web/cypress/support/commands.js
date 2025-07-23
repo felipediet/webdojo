@@ -13,6 +13,13 @@ Cypress.Commands.add('visitarPortal', () => {
 cy.visit('/')
 })
 
+Cypress.Commands.add('goToSignup', () => {
+    cy.visitarPortal()
+    cy.get('a[href="/register"]').click()
+    cy.contains('h2', 'Crie sua conta')
+        .should('be.visible')
+})
+
 // - fazerLogin: realiza login preenchendo email e senha e clicando no botão 'Entrar'.
 Cypress.Commands.add('fazerLogin', (email, password) => {
     cy.get('#email').type(email)
