@@ -1,0 +1,23 @@
+meta {
+  name: Create New User
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3333/api/users/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Felipe Diet",
+    "email": "felipdiet@webdojo.com",
+    "password": "Ramones1"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
