@@ -4,9 +4,7 @@ import { getTodayDate } from '../support/utils';
 describe('Login', () => {
   
   beforeEach(() => {
-    cy.viewport('samsung-s10') // Resolução de 360x760
     cy.visitarPortal()
-    //cy.viewport(1440, 900) // Resolução padrão de 1440x900
   })
 
   it('Deve carregar os campos de login', () => {
