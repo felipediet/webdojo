@@ -3,15 +3,19 @@ import { getTodayDate } from '../support/utils';
 
 describe('Login', () => {
   
-  it('Deve carregar os campos de login', () => {
+  beforeEach(() => {
+    cy.viewport('samsung-s10') // Resolução de 360x760
     cy.visitarPortal()
+    //cy.viewport(1440, 900) // Resolução padrão de 1440x900
+  })
+
+  it('Deve carregar os campos de login', () => {
     cy.get('#email').should('exist')
     cy.get('#password').should('exist')
     cy.get('button[type="submit"]').should('exist')
   })
 
   it('Deve logar com sucesso', () => {
-    cy.visitarPortal()
     cy.fazerLogin('papito@webdojo.com', 'katana123')
     
     cy.url().should('include', '/dashboard')
@@ -43,21 +47,18 @@ describe('Login', () => {
   })
 
   it('Não deve logar com senha incorreta', () => {
-    cy.visitarPortal()
     cy.fazerLogin('papito@webdojo.com', 'katana321')    
     cy.contains('Acesso negado! Tente novamente.')
       .should('be.visible')
   })
 
   it('Não deve logar com email incorreto', () => {
-    cy.visitarPortal()
     cy.fazerLogin('404@webdojo.com', 'katana123')
     cy.contains('Acesso negado! Tente novamente.')
       .should('be.visible')
   })
 
   it('Não deve logar com email e senha incorretos', () => {
-    cy.visitarPortal()
     cy.fazerLogin('404@webdojo.com', 'katana321')
     cy.contains('Acesso negado! Tente novamente.')
       .should('be.visible')
