@@ -5,11 +5,12 @@ describe('POST /api/users/register', () => {
     
     // Gera dados aleatórios para o novo usuário
     const newUser = {
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
+      name: 'Wolverine',
+      email: 'wolverine@xmen.com',
       password: 'pwd123'
     };
 
+    cy.task('deleteUser', newUser.email);
     //Usar cy.log('Body:', JSON.stringify(response.body));
     //Se usar cy.request
 
@@ -22,11 +23,34 @@ describe('POST /api/users/register', () => {
     });
   });
 
+  it('Não deve cadastrar com email já existente', () => {
+    
+    // Gera dados aleatórios para o novo usuário
+    const newUser = {
+      name: 'Cyclops',
+      email: 'cyclops@xmen.com',
+      password: 'pwd123'
+    };
+
+    cy.task('deleteUser', newUser.email);
+    //Usar cy.log('Body:', JSON.stringify(response.body));
+    //Se usar cy.request
+
+    cy.postUser(newUser).then((response) => {
+      expect(response.status).to.eq(201);
+    });
+
+    cy.postUser(newUser).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.error).to.eq('Email is already in use!');
+    });
+  });
+
   it('O campo Name deve ser obrigatório', () => {    
 
     // Gera dados aleatórios para o novo usuário
     const newUser = {
-      email: faker.internet.email(),
+      email: 'storm@xmen.com',
       password: 'pwd123'
     };
 
@@ -40,7 +64,7 @@ describe('POST /api/users/register', () => {
 
     // Gera dados aleatórios para o novo usuário
     const newUser = {
-      name: faker.person.fullName(),
+      name: 'jeangrey',
       password: 'pwd123'
     };
 
@@ -54,35 +78,13 @@ describe('POST /api/users/register', () => {
 
     // Gera dados aleatórios para o novo usuário
     const newUser = {
-      name: faker.person.fullName(),
-      email: faker.internet.email()
+      name: 'Xavier',
+      email: 'xavier@xmen.com'
     };
 
     cy.postUser(newUser).then((response) => {
       expect(response.status).to.eq(400);
       expect(response.body.error).to.eq('The \"Password\" field is required!');
-    });
-  });
-
-  it('Não deve cadastrar com email já existente', () => {
-    
-    // Gera dados aleatórios para o novo usuário
-    const newUser = {
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      password: 'pwd123'
-    };
-
-    //Usar cy.log('Body:', JSON.stringify(response.body));
-    //Se usar cy.request
-
-    cy.postUser(newUser).then((response) => {
-      expect(response.status).to.eq(201);
-    });
-
-    cy.postUser(newUser).then((response) => {
-      expect(response.status).to.eq(400);
-      expect(response.body.error).to.eq('Email is already in use!');
     });
   });
 
@@ -103,5 +105,4 @@ describe('POST /api/users/register', () => {
       expect(response.body.error).to.eq('Invalid JSON payload');
     });
   });
-
 });
