@@ -8,6 +8,16 @@ const port = 3333
 app.use(cors())
 app.use(express.json())
 
+app.use((err, req, res, next) => {
+  console.error(err)
+
+  if (err instanceof SyntaxError) {
+    return res.status(400).json({ error: 'Invalid JSON payload' })
+  }
+
+  next()
+})
+
 app.get('/', (req, res) => {
   res.json({ message: 'API do curso Ninja do Cypress!' })
 })

@@ -22,7 +22,6 @@ describe('POST /api/users/register', () => {
     });
   });
 
-
   it('O campo Name deve ser obrigatório', () => {    
 
     // Gera dados aleatórios para o novo usuário
@@ -65,7 +64,6 @@ describe('POST /api/users/register', () => {
     });
   });
 
-
   it('Não deve cadastrar com email já existente', () => {
     
     // Gera dados aleatórios para o novo usuário
@@ -85,6 +83,24 @@ describe('POST /api/users/register', () => {
     cy.postUser(newUser).then((response) => {
       expect(response.status).to.eq(400);
       expect(response.body.error).to.eq('Email is already in use!');
+    });
+  });
+
+  it('Não deve prosseguir com o JSON mal formatado', () => {
+
+    // Gera dados aleatórios para o novo usuário
+    const newUser = `{
+      name: faker.person.fullName()
+      email: faker.internet.email()
+      password: 'pwd123'
+    };`
+
+    //Usar cy.log('Body:', JSON.stringify(response.body));
+    //Se usar cy.request
+
+    cy.postUser(newUser).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.error).to.eq('Invalid JSON payload');
     });
   });
 

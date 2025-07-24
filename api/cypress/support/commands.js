@@ -30,6 +30,9 @@ Cypress.Commands.add('postUser', (user) => {
       method: 'POST',
       url: 'http://localhost:3333/api/users/register',
       body: user,
+      headers: {
+        'Content-Type': 'application/json'
+      },
       failOnStatusCode: false
   });
 
