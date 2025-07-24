@@ -1,7 +1,7 @@
 import {faker} from '@faker-js/faker';
 
 describe('POST /api/users/register', () => {
-  it.only('Deve cadastrar um novo usuário', () => {
+  it('Deve cadastrar um novo usuário', () => {
     
     // Gera dados aleatórios para o novo usuário
     const newUser = {
@@ -13,15 +13,7 @@ describe('POST /api/users/register', () => {
     //Usar cy.log('Body:', JSON.stringify(response.body));
     //Se usar cy.request
 
-    cy.api({
-      method: 'POST',
-      url: 'http://localhost:3333/api/users/register',
-      body: {
-        name: newUser.name,
-        email: newUser.email,
-        password: newUser.password
-      }
-    }).then((response) => {
+    cy.postUser(newUser).then((response) => {
       expect(response.status).to.eq(201);
       expect(response.body.message).to.eq('User successfully registered!');
       expect(response.body.user.id).to.match(/^[-]?\d+$/);
@@ -31,18 +23,69 @@ describe('POST /api/users/register', () => {
   });
 
 
-  it('Deve retornar erro ao cadastrar um usuário já existente', () => {    
-    cy.api({
-      method: 'POST',
-      url: 'http://localhost:3333/api/users/register',
-      body: {
-        name: 'Test User',
-        email: 'test@example.com',
-        password: 'password123'
-      }
-    }).then((response) => {
+  it('O campo Name deve ser obrigatório', () => {    
+
+    // Gera dados aleatórios para o novo usuário
+    const newUser = {
+      email: faker.internet.email(),
+      password: 'pwd123'
+    };
+
+    cy.postUser(newUser).then((response) => {
       expect(response.status).to.eq(400);
-      expect(response.body.message).to.include('Email is already in use!');
+      expect(response.body.error).to.eq('The \"Name\" field is required!');
     });
   });
+
+  it('O campo Email deve ser obrigatório', () => {
+
+    // Gera dados aleatórios para o novo usuário
+    const newUser = {
+      name: faker.person.fullName(),
+      password: 'pwd123'
+    };
+
+    cy.postUser(newUser).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.error).to.eq('The \"Email\" field is required!');
+    });
+  });
+
+  it('O campo Password deve ser obrigatório', () => {
+
+    // Gera dados aleatórios para o novo usuário
+    const newUser = {
+      name: faker.person.fullName(),
+      email: faker.internet.email()
+    };
+
+    cy.postUser(newUser).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.error).to.eq('The \"Password\" field is required!');
+    });
+  });
+
+
+  it('Não deve cadastrar com email já existente', () => {
+    
+    // Gera dados aleatórios para o novo usuário
+    const newUser = {
+      name: faker.person.fullName(),
+      email: faker.internet.email(),
+      password: 'pwd123'
+    };
+
+    //Usar cy.log('Body:', JSON.stringify(response.body));
+    //Se usar cy.request
+
+    cy.postUser(newUser).then((response) => {
+      expect(response.status).to.eq(201);
+    });
+
+    cy.postUser(newUser).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.error).to.eq('Email is already in use!');
+    });
+  });
+
 });
