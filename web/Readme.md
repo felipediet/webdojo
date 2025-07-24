@@ -29,10 +29,22 @@ cypress/
 A aplicação **WebDojo** está no mesmo repositório que os testes. Para iniciar a aplicação localmente, execute:
 
 ```bash
+cd C:\NinjaDoCypress\webdojo\web
 npm run dev
 ```
 
 Este comando utiliza o `serve` para disponibilizar os arquivos da pasta `dist` na porta `3000`. Isso é essencial para que os testes sejam executados contra uma versão estática da aplicação.
+
+---
+
+## ▶️ Execução da API
+
+A aplicação **WebDojo-API** está no repositório de API. Para iniciar a aplicação localmente, execute:
+
+```bash
+cd C:\NinjaDoCypress\webdojo\api\
+npm run dev
+```
 
 ---
 

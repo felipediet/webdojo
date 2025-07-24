@@ -1,34 +1,54 @@
 const express = require('express')
 const cors = require('cors')
+const prisma = require('./prismaClient') // importa o Prisma
 
 const app = express()
 const port = 3333
 
-app.use(cors()) // Middleware para habilitar CORS
-app.use(express.json()) // Middleware para analisar JSON no corpo das requisições
+app.use(cors())
+app.use(express.json())
 
 app.get('/', (req, res) => {
   res.json({ message: 'API do curso Ninja do Cypress!' })
 })
 
-app.post('/api/users/register', (req, res) => {
-
+app.post('/api/users/register', async (req, res) => {
   const { name, email, password } = req.body
 
   if (!name) {
-    return res.status(400).json({ error: 'Name é obrigatório!' })
+    return res.status(400).json({ error: 'Name is required!' })
   }
-
   if (!email) {
-    return res.status(400).json({ error: 'Email é obrigatório!' })
+    return res.status(400).json({ error: 'Email is required!' })
   }
-
   if (!password) {
-    return res.status(400).json({ error: 'Password é obrigatório!' })
+    return res.status(400).json({ error: 'Password is required!' })
   }
 
-  console.log(req.body)
-  return res.status(201).json({message: 'Usuário cadastrado com sucesso!'})
+  try {
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password, // Em produção, use bcrypt para criptografar!
+      },
+    })
+
+    return res.status(201).json({
+      message: 'Usuário cadastrado com sucesso!',
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
+    })
+  } catch (error) {
+    if (error.code === 'P2002') {
+      return res.status(400).json({ error: 'Email já está em uso!' })
+    }
+    console.error(error)
+    return res.status(500).json({ error: 'Erro interno do servidor' })
+  }
 })
 
 app.listen(port, () => {
