@@ -16,13 +16,13 @@ app.post('/api/users/register', async (req, res) => {
   const { name, email, password } = req.body
 
   if (!name) {
-    return res.status(400).json({ error: 'Name is required!' })
+    return res.status(400).json({ error: 'The "Name" field is required!' })
   }
   if (!email) {
-    return res.status(400).json({ error: 'Email is required!' })
+    return res.status(400).json({ error: 'The "Email" field is required!' })
   }
   if (!password) {
-    return res.status(400).json({ error: 'Password is required!' })
+    return res.status(400).json({ error: 'The "Password" field is required!' })
   }
 
   try {
@@ -35,7 +35,7 @@ app.post('/api/users/register', async (req, res) => {
     })
 
     return res.status(201).json({
-      message: 'Usuário cadastrado com sucesso!',
+      message: 'User successfully registered!',
       user: {
         id: user.id,
         name: user.name,
@@ -44,10 +44,10 @@ app.post('/api/users/register', async (req, res) => {
     })
   } catch (error) {
     if (error.code === 'P2002') {
-      return res.status(400).json({ error: 'Email já está em uso!' })
+      return res.status(400).json({ error: 'Email is already in use!' })
     }
     console.error(error)
-    return res.status(500).json({ error: 'Erro interno do servidor' })
+    return res.status(500).json({ error: 'Internal server error' })
   }
 })
 

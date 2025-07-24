@@ -1,7 +1,7 @@
 import {faker} from '@faker-js/faker';
 
 describe('POST /api/users/register', () => {
-  it('Deve cadastrar um novo usuário', () => {
+  it.only('Deve cadastrar um novo usuário', () => {
     
     // Gera dados aleatórios para o novo usuário
     const newUser = {
@@ -10,7 +10,10 @@ describe('POST /api/users/register', () => {
       password: 'pwd123'
     };
 
-    cy.request({
+    //Usar cy.log('Body:', JSON.stringify(response.body));
+    //Se usar cy.request
+
+    cy.api({
       method: 'POST',
       url: 'http://localhost:3333/api/users/register',
       body: {
@@ -20,12 +23,16 @@ describe('POST /api/users/register', () => {
       }
     }).then((response) => {
       expect(response.status).to.eq(201);
+      expect(response.body.message).to.eq('User successfully registered!');
+      expect(response.body.user.id).to.match(/^[-]?\d+$/);
+      expect(response.body.user.name).to.eq(newUser.name);
+      expect(response.body.user.email).to.eq(newUser.email);
     });
   });
 
 
   it('Deve retornar erro ao cadastrar um usuário já existente', () => {    
-    cy.request({
+    cy.api({
       method: 'POST',
       url: 'http://localhost:3333/api/users/register',
       body: {
@@ -35,7 +42,7 @@ describe('POST /api/users/register', () => {
       }
     }).then((response) => {
       expect(response.status).to.eq(400);
-      expect(response.body.message).to.include('Email já está em uso!');
+      expect(response.body.message).to.include('Email is already in use!');
     });
   });
 });
