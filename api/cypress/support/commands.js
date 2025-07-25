@@ -35,5 +35,16 @@ Cypress.Commands.add('postUser', (user) => {
       },
       failOnStatusCode: false
   });
+});
+
+Cypress.Commands.add('getUsers', () => {
+  return cy.api({
+      method: 'GET',
+      url: 'http://localhost:3333/api/users',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      failOnStatusCode: false
+  });
 
 });
