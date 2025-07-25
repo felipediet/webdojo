@@ -1,0 +1,19 @@
+meta {
+  name: Delete User
+  type: http
+  seq: 6
+}
+
+delete {
+  url: http://localhost:3333/api/users/:id
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 188
+}
+
+settings {
+  encodeUrl: true
+}

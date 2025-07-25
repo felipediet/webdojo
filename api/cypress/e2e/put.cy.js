@@ -41,12 +41,12 @@ describe('PUT /api/users/:id', () => {
             });
         })
 
-        it('Deve retornar erro ao tentar atualizar um usuário inexistente', () => {
-            const nonExistentUserId = 9999; // ID que não existe no banco de dados
+        it('Deve retornar 404 e User Not Found ao tentar atualizar um usuário inexistente', () => {
+            const nonExistentUserId = 337319601; // ID que não existe no banco de dados
             cy.putUser(nonExistentUserId, updatedUser)
                 .then((response) => {
-                    expect(response.status).to.eq(500);
-                    expect(response.body.error).to.eq('Error updating user :(');
+                    expect(response.status).to.eq(404);
+                    expect(response.body.error).to.eq('User not found!');
                 });
         })
     });
@@ -80,4 +80,43 @@ describe('PUT /api/users/:id', () => {
                 });
         });
     });
+    
+    context('Quando o usuário não existe', () => {
+
+        let userId;
+
+        const originalUser = {
+            name: 'Original User',
+            email: 'original@example.com',
+            password: 'originalPassword'
+        }
+
+        const updatedUser = {
+            name: 'Updated User',
+            email: 'updated@example.com',
+            password: 'updatedPassword'
+        }
+
+        before(() => {
+            cy.task('deleteUser', originalUser.email)
+            cy.task('deleteUser', updatedUser.email)
+
+            //Cadastar o usuário original
+            cy.postUser(originalUser).then((response) => {
+                cy.log(response.body.user.id);
+                userId = response.body.user.id;
+            });
+
+            cy.task('deleteUser', originalUser.email)
+        })
+
+
+        it('Deve retornar 404 e User Not Found', () => {
+
+            cy.putUser(userId, updatedUser).then((response) => {
+                expect(response.status).to.eq(404);
+                expect(response.body.error).to.eq('User not found!');
+            });
+        })
+    })
 })
