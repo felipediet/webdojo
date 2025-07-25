@@ -79,6 +79,38 @@ app.get('/api/users', async (req, res) => {
 
 })
 
+app.put('/api/users/:id', async (req, res) => {
+  const {id} = req.params
+  const {name, email, password} = req.body
+
+  if (!name) {
+    return res.status(400).json({ error: 'The "Name" field is required!' })
+  }
+  if (!email) {
+    return res.status(400).json({ error: 'The "Email" field is required!' })
+  }
+  if (!password) {
+    return res.status(400).json({ error: 'The "Password" field is required!' })
+  }
+
+  try {
+    await prisma.user.update({
+      where: { id: Number(id) },
+      data: {
+        name,
+        email,
+        password
+      }
+    })
+
+    res.status(204).end()
+    
+  } catch (error) {
+    //console.error(error)
+    res.status(500).json({ error: 'Error updating user :(' })
+  }
+})
+
 app.listen(port, () => {
   console.log(`WebDojo is listening on port ${port}`)
 })
