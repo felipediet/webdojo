@@ -4,7 +4,6 @@ describe('Expert Tests', () => {
     });
 
     it('Deve manipular o valor de um campo', () => {
-    cy.log('todo')
 
     cy.get('#email').invoke('val', 'felipe@test.com')
 
@@ -60,5 +59,27 @@ describe('Expert Tests', () => {
         cy.get('@toast')
             .should('not.exist')
     });
+
+    it.only('Simulando a tecla TAB com cy.press', () => {
+
+        cy.get('body').press('Tab')
+        cy.get('#email')
+            .should('be.focused')
+
+        cy.get('#email').type('papito@webdojo.com')
+
+        cy.get('#email').press('Tab')
+        
+        cy.focused()
+            .should('have.attr', 'id', 'password')
+
+        // cy.get('#password')
+        //     .should('be.focused')
+        
+        cy.get('#password').type('katana123')
+        
+        //cy.get('#submit').click()
+
+    })
 
 });
