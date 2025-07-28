@@ -60,7 +60,7 @@ describe('Expert Tests', () => {
             .should('not.exist')
     });
 
-    it.only('Simulando a tecla TAB com cy.press', () => {
+    it('Simulando a tecla TAB com cy.press', () => {
 
         cy.get('body').press('Tab')
         cy.get('#email')
@@ -81,5 +81,26 @@ describe('Expert Tests', () => {
         //cy.get('#submit').click()
 
     })
+
+    it('Não deve logar com senha inválida - Utilizando tecla ENTER ao submeter form', () => {
+
+        cy.get('#email').type('papito@webdojo.com')
+        cy.get('#password').type('katana321{Enter}')
+
+        //https://docs.cypress.io/api/commands/type
+
+        cy.get('[data-sonner-toaster="true"]')
+            .should('be.visible')
+            .as('toast')
+        
+        cy.get('@toast')
+            .find('.title')
+            .should('have.text', 'Acesso negado! Tente novamente.')
+
+        cy.wait(5000)
+
+        cy.get('@toast')
+            .should('not.exist')
+    });
 
 });
