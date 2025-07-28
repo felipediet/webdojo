@@ -44,4 +44,21 @@ describe('Expert Tests', () => {
             .should('have.text', 'Acesso negado! Tente novamente.')
     });
 
+    it('Não deve logar com senha inválida - Validação de Toast com 5 segundos', () => {
+        cy.fazerLogin('papito@webdojo.com', 'katana321')
+
+        cy.get('[data-sonner-toaster="true"]')
+            .should('be.visible')
+            .as('toast')
+        
+        cy.get('@toast')
+            .find('.title')
+            .should('have.text', 'Acesso negado! Tente novamente.')
+
+        cy.wait(5000)
+
+        cy.get('@toast')
+            .should('not.exist')
+    });
+
 });
