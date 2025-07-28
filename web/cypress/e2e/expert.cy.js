@@ -106,7 +106,7 @@ describe('Expert Tests', () => {
             .should('not.exist')
     });
 
-    it.only('Deve realizar uma carga de dados fake utilizando FAKER e LODASH', () => {
+    it('Deve realizar uma carga de dados fake utilizando FAKER e LODASH', () => {
         cy.log('todo')
         
         _.times(10, () => {
@@ -117,6 +117,43 @@ describe('Expert Tests', () => {
             cy.log(name)
             cy.log(email)
             cy.log(password)
+        });
+    });
+
+    it('Deve cadastrar um novo usuário utilizando FAKER e LODASH', () => {
+        _.times(5, () => {
+
+            cy.goToSignup()
+                cy.intercept('POST', 'http://localhost:3333/api/users/register', {
+                statusCode: 201,
+                body: {
+                    email: "felipe.diet@example.com",
+                    name: "Felipe Diet",
+                    password: "katana123",
+                    message: 'Usuário cadastrado com sucesso!'
+                }
+                }).as('postSignUp')
+            
+            const name = faker.person.fullName();
+            const email = faker.internet.email();
+            const password = 'pwd123';
+
+            // cy.log(name)
+            // cy.log(email)
+            // cy.log(password)
+
+            cy.get('#name').type(name)
+            cy.get('#email').type(email)
+            cy.get('#password').type(password)
+            cy.contains('button', 'Criar conta').click()
+
+            cy.wait('@postSignUp').then((interception) => {
+                expect(interception.response.statusCode).to.eq(201)
+                expect(interception.response.body.message).to.eq('Usuário cadastrado com sucesso!')
+            })
+
+            cy.contains('Conta criada com sucesso!')
+                .should('be.visible')
         });
     });
 
