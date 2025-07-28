@@ -1,3 +1,6 @@
+import { faker } from '@faker-js/faker';
+import _ from 'lodash';
+
 describe('Expert Tests', () => {
     beforeEach(() => {
         cy.visitarPortal();
@@ -102,5 +105,20 @@ describe('Expert Tests', () => {
         cy.get('@toast')
             .should('not.exist')
     });
+
+    it.only('Deve realizar uma carga de dados fake utilizando FAKER e LODASH', () => {
+        cy.log('todo')
+        
+        _.times(10, () => {
+            const name = faker.person.fullName();
+            const email = faker.internet.email();
+            const password = 'pwd123';
+
+            cy.log(name)
+            cy.log(email)
+            cy.log(password)
+        });
+    });
+
 
 });
